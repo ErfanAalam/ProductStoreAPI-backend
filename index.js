@@ -54,7 +54,12 @@ mongoose.connect(process.env.MONGODB_URL)
     const productModel = model("products", productSchema)
 
 app.get("/", async(req, res) => {
-    const Product = await productModel.find()
+    const Product = await productModel.find().select("-_id -__v")
+    // const modifiedProducts = Product.map(product => {
+    //     const { _id, __v, ...rest } = product;
+    //     return rest;
+    // });
+    console.log(Product);
     res.json(Product)
 })
 
